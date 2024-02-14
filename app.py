@@ -14,7 +14,6 @@ with st.sidebar:
 
     if add_button:
         # Update the leaderboard
-        # This simplistic approach adds a new entry or updates an existing one based on the name and class
         updated = False
         for entry in st.session_state.leaderboard:
             if entry["Class"] == class_option and entry["Name"] == name:
@@ -29,14 +28,15 @@ st.title("Mr. Ward's Class Leaderboard")
 
 class_selection = st.selectbox("Select Class", options=["All Classes"] + ["Period 1", "Period 2", "Period 3", "Period 4", "Period 5"], index=0, key="class_filter")
 
+# Sort and filter the leaderboard
+leaderboard = sorted(st.session_state.leaderboard, key=lambda x: (-x["Score"], x["Class"]))
 if class_selection != "All Classes":
-    filtered_leaderboard = [entry for entry in st.session_state.leaderboard if entry["Class"] == class_selection]
-else:
-    filtered_leaderboard = st.session_state.leaderboard
+    leaderboard = [entry for entry in leaderboard if entry["Class"] == class_selection]
 
-# Sort the leaderboard by class and then score
-filtered_leaderboard.sort(key=lambda x: (-x["Score"], x["Class"]))
-
-# Display the leaderboard
-for entry in filtered_leaderboard:
-    st.write(f'{entry["Class"]} - {entry["Name"]}: {entry["Score"]}')
+# Display the leaderboard with crown for the top scorer
+crown_url = "URL_TO_YOUR_CROWN_IMAGE"  # Replace with the direct URL to your crown image
+for i, entry in enumerate(leaderboard):
+    if i == 0:  # First place
+        st.markdown(f"![crown]({crown_url}) {entry['Class']} - {entry['Name']}: {entry['Score']}", unsafe_allow_html=True)
+    else:
+        st.write(f'{entry["Class"]} - {entry["Name"]}: {entry["Score"]}')
