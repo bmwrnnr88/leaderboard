@@ -39,11 +39,10 @@ class_to_display = st.selectbox("Display Leaderboard for Class", options=["Perio
 # Display the leaderboard
 leaderboard_for_display = get_leaderboard_for_class(class_to_display)
 if leaderboard_for_display:
-    # Display the crown image for the first place
-    crown_url = "URL_TO_YOUR_CROWN_IMAGE"  # Replace with the direct URL to your crown image
+    # Display the crown emoji for the first place
     for i, entry in enumerate(leaderboard_for_display):
-        if i == 0:  # First place
-            st.markdown(f"![crown]({crown_url}) {entry['Name']}: {entry['Score']}", unsafe_allow_html=True)
+        if i == 0 and entry["Score"] > 0:  # First place and ensure there is a score
+            st.write(f"👑 {entry['Name']}: {entry['Score']}")
         else:
             st.write(f"{entry['Name']}: {entry['Score']}")
 else:
