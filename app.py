@@ -34,7 +34,7 @@ if class_selection != "All Classes":
     leaderboard = [entry for entry in leaderboard if entry["Class"] == class_selection]
 
 # Display the leaderboard with crown for the top scorer
-crown_url = "URL_TO_YOUR_CROWN_IMAGE"  # Replace with the direct URL to your crown image
+crown_url = "https://github.com/bmwrnnr88/leaderboard/blob/main/crown.jpg"  # Replace with the direct URL to your crown image
 for i, entry in enumerate(leaderboard):
     if i == 0:  # First place
         st.markdown(f"![crown]({crown_url}) {entry['Class']} - {entry['Name']}: {entry['Score']}", unsafe_allow_html=True)
